@@ -1,6 +1,5 @@
 package com.codegym.md4productmanagement.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,23 +7,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products")
+@Table(name = "categories")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+@NoArgsConstructor
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-    private double price;
-
-    private String description;
-
-    private String image;
-
-    @ManyToOne
-    private Category category;
 }

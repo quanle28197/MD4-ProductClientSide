@@ -15,9 +15,20 @@ public class ProductForm {
 
     private double price;
 
+    private int quantity;
+
     private String description;
 
     private MultipartFile image;
 
+    private Category category;
 
+    public ProductForm(String name, double price, int quantity, String description, MultipartFile image, Category category) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.description = description;
+        this.image = image;
+        this.category = category;
+    }
 }

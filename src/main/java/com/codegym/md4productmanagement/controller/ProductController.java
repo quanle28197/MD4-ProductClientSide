@@ -3,7 +3,7 @@ package com.codegym.md4productmanagement.controller;
 
 import com.codegym.md4productmanagement.model.Product;
 import com.codegym.md4productmanagement.model.ProductForm;
-import com.codegym.md4productmanagement.service.IProductService;
+import com.codegym.md4productmanagement.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -28,12 +28,8 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping
-    public ResponseEntity<Iterable<Product>> findAll(@RequestParam(name = "q") Optional<String> q) {
-        Iterable<Product> products = productService.findAll();
-        if (q.isPresent()) {
-            products = productService.findProductByNameContaining(q.get());
-        }
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    public ResponseEntity<Iterable<Product>> showAll(){
+        return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
 
 
@@ -56,7 +52,7 @@ public class ProductController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Product product = new Product(productForm.getId(), productForm.getName(), productForm.getPrice(), productForm.getDescription(), fileName);
+            Product product = new Product(productForm.getId(), productForm.getName(), productForm.getPrice(), productForm.getDescription(), fileName, productForm.getCategory());
             return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -78,11 +74,8 @@ public class ProductController {
         if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        productService.remove(id);
+        productService.removeById(id);
         return new ResponseEntity<>(productOptional.get(), HttpStatus.OK);
     }
-
-
-
 }
 
